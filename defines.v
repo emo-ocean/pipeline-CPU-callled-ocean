@@ -30,6 +30,7 @@
 `define alu_sel_bus 2:0
 `define inst_valid 1'b0
 `define inst_invalid 1'b1
+
 `define stop 1'b1
 `define no_stop 1'b0
 `define in_delay_slot 1'b1
@@ -101,8 +102,8 @@
 //rom
 `define inst_addr_bus 31:0
 `define inst_bus 31:0
-`define inst_mem_num 131071 //romʵ�ʴ�С128KB
-`define inst_mem_num_log2 17 //romʵ��ʹ�õ�ַ�߿���
+`define inst_mem_num 131071 //rom实际大小128KB
+`define inst_mem_num_log2 17 //rom实际使用地址线宽度
 
 //regfile
 `define reg_addr_bus 4:0
