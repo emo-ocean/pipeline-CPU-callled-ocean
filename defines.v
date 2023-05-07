@@ -70,7 +70,7 @@
 `define exe_regimm_inst 6'b000001
 `define exe_special2_inst 6'b011100
 
-`define exe_nop		5'b000000
+`define exe_nop		6'b000000
 `define ssnop 32'h0000
 
 //alu op
@@ -94,7 +94,7 @@
 
 
 //alu sel
-`define exe_res_logic 3'b000
+`define exe_res_logic 3'b001
 `define exe_res_shift 3'b010
 
 `define exe_res_nop 3'b000
