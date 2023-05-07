@@ -71,7 +71,7 @@
 `define exe_special2_inst 6'b011100
 
 `define exe_nop		6'b000000
-`define ssnop 32'h0000
+`define ssnop 32'h00000000
 
 //alu op
 `define exe_and_op 8'b00100100
