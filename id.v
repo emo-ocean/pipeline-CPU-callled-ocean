@@ -77,22 +77,22 @@ if (rst == `rst_enable)begin
 	id_reg_ra1 <= `nop_reg_addr;
 	id_reg_ra2 <= `nop_reg_addr;
 	imm <= 32'h0;
-	end else begin
+end else begin
 	alu_op <= `exe_nop_op;
 	alu_sel <= `exe_res_nop;
 	id_des_addr <= inst_de[15:11];
-id_des_exist <= `write_disable;
-inst_valid <= `inst_valid;
-id_reg_re1 <= 1'b0;
-id_reg_re2 <= 1'b0;
-id_reg_ra1 <= inst_de[25:21];
-id_reg_ra2 <= inst_de[20:16];
-imm <= `zero_word;
+	id_des_exist <= `write_disable;
+	inst_valid <= `inst_valid;
+	id_reg_re1 <= 1'b0;
+	id_reg_re2 <= 1'b0;
+	id_reg_ra1 <= inst_de[25:21];
+	id_reg_ra2 <= inst_de[20:16];
+	imm <= `zero_word;
 
 case(op1)
-`exe_special_inst:begin
+`exe_special_inst:	begin
     case(sha2)
-    5'b00000: begin
+    5'b00000: 	begin
         case(fun3)
         
         `exe_or:begin
@@ -134,7 +134,7 @@ case(op1)
         `exe_sllv:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_sll_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
+        alu_sel <= `exe_res_shift;
         id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b1;
         inst_valid <= `inst_valid;
@@ -143,7 +143,7 @@ case(op1)
         `exe_srlv:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_srl_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
+        alu_sel <= `exe_res_shift;
         id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b1;
         inst_valid <= `inst_valid;
@@ -152,7 +152,7 @@ case(op1)
         `exe_srav:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_sra_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
+        alu_sel <= `exe_res_shift;
         id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b1;
         inst_valid <= `inst_valid;
@@ -226,7 +226,7 @@ case(op1)
         `exe_pref:begin
         id_des_exist <= `write_disable;
         alu_op <= `exe_nop_op;
-        alu_sel <= `exe_res_nop;//logic algorithm
+        alu_sel <= `exe_res_nop;
         id_reg_re1 <= 1'b0;
         id_reg_re2 <= 1'b0;
         inst_valid <= `inst_valid;
@@ -283,27 +283,27 @@ if (rst == `rst_enable)begin
 	id_src1 <= mem_des_data_in;
 	end else if (id_reg_re1 == 1'b1)begin
 		id_src1 <= reg_id_data1;
-		end else if (id_reg_re1 <= 1'b0)begin
-			id_src1 <= imm;
-			end else begin
-			id_src1 <= `zero_word;
-			end
-			end
+	end else if (id_reg_re1 <= 1'b0)begin
+		id_src1 <= imm;
+	end else begin
+		id_src1 <= `zero_word;
+	end
+	end
 
-			//src2
-			always@(*)begin
-			if (rst == `rst_enable)begin
-				id_src2 <= `zero_word;
-				end else if ((id_reg_re2 == 1'b1)&&(ex_des_exist_in==1'b1) && (ex_des_addr_in == id_reg_ra2))begin
-				id_src2 <= ex_des_data_in;
-				end else if ((id_reg_re2 == 1'b1)&&(mem_des_exist_in==1'b1) && (mem_des_addr_in == id_reg_ra2))begin
-				id_src2 <= mem_des_data_in;
-				end else if (id_reg_re2 == 1'b1)begin
-					id_src2 <= reg_id_data1;
-					end else if (id_reg_re2 <= 1'b0)begin
-						id_src2 <= imm;
-						end else begin
-						id_src2 <= `zero_word;
-						end
-						end
+//src2
+always@(*)begin
+if (rst == `rst_enable)begin
+	id_src2 <= `zero_word;
+	end else if ((id_reg_re2 == 1'b1)&&(ex_des_exist_in==1'b1) && (ex_des_addr_in == id_reg_ra2))begin
+	id_src2 <= ex_des_data_in;
+	end else if ((id_reg_re2 == 1'b1)&&(mem_des_exist_in==1'b1) && (mem_des_addr_in == id_reg_ra2))begin
+		id_src2 <= mem_des_data_in;
+	end else if (id_reg_re2 == 1'b1)begin
+		id_src2 <= reg_id_data1;
+	end else if (id_reg_re2 <= 1'b0)begin
+		id_src2 <= imm;
+	end else begin
+		id_src2 <= `zero_word;
+	end
+	end
 						endmodule
