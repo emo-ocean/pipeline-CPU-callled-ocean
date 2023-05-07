@@ -1,0 +1,24 @@
+`include "defines.v"
+`timescale 1ns / 1ps
+
+module sopc_tb();
+reg clk;
+reg rst;
+
+sopc sopc_instance(
+	.clk(clk),
+	.rst(rst)
+);
+
+initial begin
+clk = 1'b0;
+forever #10 clk = ~clk;
+end
+
+initial begin
+rst = `rst_enable;
+#195 rst=`rst_disable;
+#1000 $stop;
+end
+
+endmodule
