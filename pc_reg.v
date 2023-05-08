@@ -1,5 +1,4 @@
 `include "defines.v"
-`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -25,7 +24,7 @@ module pc_reg(
     input wire clk,
     input wire rst,
     output reg [`inst_addr_bus] pc,
-    output reg inst_mem_en //Ö¸Áî´æ´¢Æ÷Ê¹ÄÜÐÅºÅ
+    output reg inst_mem_en 
     );
     
    
