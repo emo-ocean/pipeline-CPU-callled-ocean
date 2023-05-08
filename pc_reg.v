@@ -25,16 +25,10 @@ module pc_reg(
     input wire clk,
     input wire rst,
     output reg [`inst_addr_bus] pc,
-    output reg inst_mem_en //ָ��洢��ʹ���ź�
+    output reg inst_mem_en //Ö¸Áî´æ´¢Æ÷Ê¹ÄÜÐÅºÅ
     );
     
-    always@(posedge clk) begin
-        if(rst==`rst_enable) begin
-            inst_mem_en=`chip_disable;
-        end else begin
-            inst_mem_en=`chip_enable;
-        end
-    end 
+   
     
     always@(posedge clk) begin
         if(inst_mem_en==`chip_disable)begin
@@ -43,5 +37,13 @@ module pc_reg(
             pc=pc+4'h4;
         end
     end
+    
+     always@(posedge clk) begin
+        if(rst==`rst_enable) begin
+            inst_mem_en=`chip_disable;
+        end else begin
+            inst_mem_en=`chip_enable;
+        end
+    end 
     
 endmodule
