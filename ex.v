@@ -113,11 +113,12 @@ if (rst == `rst_enable)begin
 		end
 
 
-        `exe_res_shift:     begin
-            ex_des_data_out<=shift_result;
-        end
+        	`exe_res_shift:		begin
+            	ex_des_data_out<=shift_result;
+        	end
 
-	default:	begin
+		
+		default:	begin
 			ex_des_data_out <= `zero_word;
 		end
 
