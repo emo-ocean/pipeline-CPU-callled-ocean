@@ -1,5 +1,4 @@
 `include "defines.v"
-`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -27,7 +26,7 @@ module inst_rom(
 	output reg[`inst_bus] inst
 );
 
-reg[`inst_bus] inst_mem[`inst_mem_num-1:0];
+	reg[`inst_bus] inst_mem[0:`inst_mem_num-1];
 
 initial $readmemh("C:/Users/lx/Desktop/inst_rom.data", inst_mem);
 
