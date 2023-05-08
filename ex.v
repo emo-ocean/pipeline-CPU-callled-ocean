@@ -1,5 +1,4 @@
 `include "defines.v"
-`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -114,7 +113,7 @@ if (rst == `rst_enable)begin
 
 
         	`exe_res_shift:		begin
-            	ex_des_data_out<=shift_result;
+            		ex_des_data_out<=shift_result;
         	end
 
 		
