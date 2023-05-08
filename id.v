@@ -1,5 +1,4 @@
 `include "defines.v"
-`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -107,7 +106,7 @@ case(op1)
         `exe_and:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_and_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
+        alu_sel <= `exe_res_logic;
         id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b1;
         inst_valid <= `inst_valid;
@@ -116,7 +115,7 @@ case(op1)
         `exe_xor:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_xor_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
+        alu_sel <= `exe_res_logic;
         id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b1;
         inst_valid <= `inst_valid;
@@ -125,7 +124,7 @@ case(op1)
         `exe_nor:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_nor_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
+        alu_sel <= `exe_res_logic;
         id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b1;
         inst_valid <= `inst_valid;
@@ -193,7 +192,7 @@ case(op1)
         `exe_andi:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_and_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
+        alu_sel <= `exe_res_logic;
         id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b0;
         imm <= {16'h0,inst_de[15:0]};
@@ -204,7 +203,7 @@ case(op1)
         `exe_xori:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_xor_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
+        alu_sel <= `exe_res_logic;
         id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b0;
         imm <= {16'h0,inst_de[15:0]};
@@ -215,8 +214,8 @@ case(op1)
         `exe_lui:begin
         id_des_exist <= `write_enable;
         alu_op <= `exe_or_op;
-        alu_sel <= `exe_res_logic;//logic algorithm
-        id_reg_re1 <= 1'b1;
+        alu_sel <= `exe_res_logic;
+	id_reg_re1 <= 1'b1;
         id_reg_re2 <= 1'b0;
         imm <= {inst_de[15:0],16'h0};
         id_des_addr <= inst_de[20:16];
@@ -306,4 +305,5 @@ if (rst == `rst_enable)begin
 		id_src2 <= `zero_word;
 	end
 	end
-						endmodule
+						
+endmodule
