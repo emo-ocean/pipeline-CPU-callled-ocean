@@ -184,22 +184,22 @@ module openmips(
 		.ex_wreg(ex_wreg_i)
 	);		
 	
-	//EX模块
+	//EX module
 	ex ex0(
 		.rst(rst),
 	
-		//送到执行阶段EX模块的信息
-		.aluop_i(ex_aluop_i),
-		.alusel_i(ex_alusel_i),
-		.reg1_i(ex_reg1_i),
-		.reg2_i(ex_reg2_i),
-		.wd_i(ex_wd_i),
-		.wreg_i(ex_wreg_i),
+		//from id to ex
+		.aluop_in(ex_aluop_i),
+		.alusel_in(ex_alusel_i),
+		.reg1_data_in(ex_reg1_i),
+		.reg2_data_in(ex_reg2_i),
+		.des_addr_in(ex_wd_i),
+		.des_exist_in(ex_wreg_i),
 	  
-	  //EX模块的输出到EX/MEM模块信息
-		.wd_o(ex_wd_o),
-		.wreg_o(ex_wreg_o),
-		.wdata_o(ex_wdata_o)
+	  	//ex result
+		.des_addr_out(ex_wd_o),
+		.des_exist_out(ex_wreg_o),
+		.des_data_out(ex_wdata_o)
 		
 	);
 
