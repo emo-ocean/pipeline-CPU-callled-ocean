@@ -153,25 +153,25 @@ module id(
 		  	`EXE_ORI:			begin                        //ORI指令
 		  		des_exist_out <= `WriteEnable;		aluop_out <= `EXE_OR_OP;
 		  		alusel_out <= `EXE_RES_LOGIC; reg1_read_out <= 1'b1;	reg2_read_out <= 1'b0;	  	
-				imm <= {16'h0, inst_i[15:0]};		des_addr_out <= inst_in[20:16];
+				imm <= {16'h0, inst_in[15:0]};		des_addr_out <= inst_in[20:16];
 					instvalid <= `InstValid;	
 		  	end
 		  	`EXE_ANDI:			begin
 		  		des_exist_out <= `WriteEnable;		aluop_out <= `EXE_AND_OP;
 		  		alusel_out <= `EXE_RES_LOGIC;	reg1_read_out <= 1'b1;	reg2_read_out <= 1'b0;	  	
-				imm <= {16'h0, inst_i[15:0]};		des_addr_out <= inst_in[20:16];		  	
+				imm <= {16'h0, inst_in[15:0]};		des_addr_out <= inst_in[20:16];		  	
 					instvalid <= `InstValid;	
 				end	 	
 		  	`EXE_XORI:			begin
 		  		des_exist_out <= `WriteEnable;		aluop_out <= `EXE_XOR_OP;
 		  		alusel_out <= `EXE_RES_LOGIC;	reg1_read_out <= 1'b1;	reg2_read_out <= 1'b0;	  	
-				imm <= {16'h0, inst_i[15:0]};		des_addr_out <= inst_in[20:16];		  	
+				imm <= {16'h0, inst_in[15:0]};		des_addr_out <= inst_in[20:16];		  	
 					instvalid <= `InstValid;	
 				end	 		
 		  	`EXE_LUI:			begin
 		  		des_exist_out <= `WriteEnable;		aluop_out <= `EXE_OR_OP;
-		  		alusel_out <= `EXE_RES_LOGIC; reg1_read_o <= 1'b1;	reg2_read_out <= 1'b0;	  	
-				imm <= {inst_i[15:0], 16'h0};		des_addr_out <= inst_in[20:16];		  	
+		  		alusel_out <= `EXE_RES_LOGIC; reg1_read_out <= 1'b1;	reg2_read_out <= 1'b0;	  	
+				imm <= {inst_in[15:0], 16'h0};		des_addr_out <= inst_in[20:16];		  	
 					instvalid <= `InstValid;	
 				end		
 			`EXE_PREF:			begin
@@ -186,17 +186,17 @@ module id(
 		  if (inst_in[31:21] == 11'b00000000000) begin
 		  	if (op3 == `EXE_SLL) begin
 		  		des_exist_out <= `WriteEnable;		aluop_out <= `EXE_SLL_OP;
-		  		alusel_out <= `EXE_RES_SHIFT; reg1_read_o <= 1'b0;	reg2_read_out <= 1'b1;	  	
+		  		alusel_out <= `EXE_RES_SHIFT; reg1_read_out <= 1'b0;	reg2_read_out <= 1'b1;	  	
 				imm[4:0] <= inst_in[10:6];		des_addr_out <= inst_in[15:11];
 					instvalid <= `InstValid;	
 			end else if ( op3 == `EXE_SRL ) begin
 		  		des_exist_out <= `WriteEnable;		aluop_out <= `EXE_SRL_OP;
-		  		alusel_out <= `EXE_RES_SHIFT; reg1_read_o <= 1'b0;	reg2_read_out <= 1'b1;	  	
+		  		alusel_out <= `EXE_RES_SHIFT; reg1_read_out <= 1'b0;	reg2_read_out <= 1'b1;	  	
 				imm[4:0] <= inst_in[10:6];		des_addr_out <= inst_in[15:11];
 					instvalid <= `InstValid;	
 			end else if ( op3 == `EXE_SRA ) begin
 		  		des_exist_out <= `WriteEnable;		aluop_out <= `EXE_SRA_OP;
-		  		alusel_out <= `EXE_RES_SHIFT; reg1_read_o <= 1'b0;	reg2_read_out <= 1'b1;	  	
+		  		alusel_out <= `EXE_RES_SHIFT; reg1_read_out <= 1'b0;	reg2_read_out <= 1'b1;	  	
 				imm[4:0] <= inst_in[10:6];		des_addr_out <= inst_in[15:11];
 					instvalid <= `InstValid;	
 				end
