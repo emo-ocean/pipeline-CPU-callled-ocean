@@ -203,23 +203,20 @@ module openmips(
 		
 	);
 
-  //EX/MEM模块
+  //ex_mem module
   ex_mem ex_mem0(
 		.clk(clk),
 		.rst(rst),
 	  
-		//来自执行阶段EX模块的信息	
-		.ex_wd(ex_wd_o),
-		.ex_wreg(ex_wreg_o),
-		.ex_wdata(ex_wdata_o),
+		//from ex
+		.ex_des_addr(ex_wd_o),
+		.ex_des_exist(ex_wreg_o),
+		.ex_des_data(ex_wdata_o),
 	
-
-		//送到访存阶段MEM模块的信息
-		.mem_wd(mem_wd_i),
-		.mem_wreg(mem_wreg_i),
-		.mem_wdata(mem_wdata_i)
-
-						       	
+		//pass to mem
+		.mem_des_addr(mem_wd_i),
+		.mem_des_exist(mem_wreg_i),
+		.mem_des_data(mem_wdata_i)					       	
 	);
 	
   //MEM模块例化
