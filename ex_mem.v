@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
-//// Copyright (C) 2014 leishangwen@163.com                       ////
+//// Copyright (C) 2023 		                          ////
 ////                                                              ////
 //// This source file may be used and distributed without         ////
 //// restriction provided that this copyright statement is not    ////
@@ -24,9 +24,7 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  ex_mem
 // File:    ex_mem.v
-// Author:  Lei Silei
-// E-mail:  leishangwen@163.com
-// Description: EX/MEM阶段的寄存器
+// Author:  yuzehai
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -34,33 +32,31 @@
 
 module ex_mem(
 
-	input	wire										clk,
-	input wire										rst,
+	input	wire			clk,
+	input wire			rst,
+		
+	//from ex	
+	input wire[`RegAddrBus]       ex_des_addr,
+	input wire                    ex_des_exist,
+	input wire[`RegBus]		ex_des_data, 	
 	
-	
-	//来自执行阶段的信息	
-	input wire[`RegAddrBus]       ex_wd,
-	input wire                    ex_wreg,
-	input wire[`RegBus]					 ex_wdata, 	
-	
-	//送到访存阶段的信息
-	output reg[`RegAddrBus]      mem_wd,
-	output reg                   mem_wreg,
-	output reg[`RegBus]					 mem_wdata
-	
-	
+	//pass to mem
+	output reg[`RegAddrBus]      mem_des_addr,
+	output reg                   mem_des_exist,
+	output reg[`RegBus]		 mem_des_data
+		
 );
 
 
 	always @ (posedge clk) begin
 		if(rst == `RstEnable) begin
-			mem_wd <= `NOPRegAddr;
-			mem_wreg <= `WriteDisable;
-		  mem_wdata <= `ZeroWord;	
+			mem_des_addr <= `NOPRegAddr;
+			mem_des_exist <= `WriteDisable;
+		  	mem_des_data <= `ZeroWord;	
 		end else begin
-			mem_wd <= ex_wd;
-			mem_wreg <= ex_wreg;
-			mem_wdata <= ex_wdata;			
+			mem_des_addr <= ex_des_addr;
+			mem_des_exist <= ex_des_exist;
+			mem_des_data <= ex_des_data;			
 		end    //if
 	end      //always
 			
