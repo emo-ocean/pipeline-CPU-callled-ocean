@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
-//// Copyright (C) 2014 leishangwen@163.com                       ////
+//// Copyright (C) 2023 2983643426@qq.com                        ////
 ////                                                              ////
 //// This source file may be used and distributed without         ////
 //// restriction provided that this copyright statement is not    ////
@@ -24,9 +24,8 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  ex
 // File:    ex.v
-// Author:  Lei Silei
-// E-mail:  leishangwen@163.com
-// Description: 执行阶段
+// Author:  yuzehai
+// Description: ex stage
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -36,18 +35,18 @@ module ex(
 
 	input wire			rst,
 	
-	//送到执行阶段的信息
-	input wire[`AluOpBus]         aluop_i,
-	input wire[`AluSelBus]        alusel_i,
-	input wire[`RegBus]           reg1_i,
-	input wire[`RegBus]           reg2_i,
-	input wire[`RegAddrBus]       wd_i,
-	input wire                    wreg_i,
+	//from id to ex 
+	input wire[`AluOpBus]         aluop_in,
+	input wire[`AluSelBus]        alusel_in,
+	input wire[`RegBus]           reg1_data_in,
+	input wire[`RegBus]           reg2_data_in,
+	input wire[`RegAddrBus]       des_addr_in,
+	input wire                    des_exist_in,
 
-	
-	output reg[`RegAddrBus]       wd_o,
-	output reg                    wreg_o,
-	output reg[`RegBus]		wdata_o
+	//ex result
+	output reg[`RegAddrBus]       des_addr_out,
+	output reg                    des_exist_out,
+	output reg[`RegBus]		des_data_out
 	
 );
 
@@ -58,20 +57,20 @@ module ex(
 		if(rst == `RstEnable) begin
 			logicout <= `ZeroWord;
 		end else begin
-			case (aluop_i)
-				`EXE_OR_OP:			begin
-					logicout <= reg1_i | reg2_i;
+			case (aluop_in)
+				`EXE_OR_OP:		begin
+					logicout <= reg1_data_in | reg2_data_in;
 				end
 				`EXE_AND_OP:		begin
-					logicout <= reg1_i & reg2_i;
+					logicout <= reg1_data_in & reg2_data_in;
 				end
 				`EXE_NOR_OP:		begin
-					logicout <= ~(reg1_i |reg2_i);
+					logicout <= ~(reg1_data_in | reg2_data_in);
 				end
 				`EXE_XOR_OP:		begin
-					logicout <= reg1_i ^ reg2_i;
+					logicout <= reg1_data_in ^ reg2_data_in;
 				end
-				default:				begin
+				default:		begin
 					logicout <= `ZeroWord;
 				end
 			endcase
@@ -82,16 +81,15 @@ module ex(
 		if(rst == `RstEnable) begin
 			shiftres <= `ZeroWord;
 		end else begin
-			case (aluop_i)
-				`EXE_SLL_OP:			begin
-					shiftres <= reg2_i << reg1_i[4:0] ;
+			case (aluop_in)
+				`EXE_SLL_OP:		begin
+					shiftres <= reg2_data_in << reg1_data_in[4:0] ;
 				end
 				`EXE_SRL_OP:		begin
-					shiftres <= reg2_i >> reg1_i[4:0];
+					shiftres <= reg2_data_in >> reg1_data_in[4:0];
 				end
 				`EXE_SRA_OP:		begin
-					shiftres <= ({32{reg2_i[31]}} << (6'd32-{1'b0, reg1_i[4:0]})) 
-												| reg2_i >> reg1_i[4:0];
+					shiftres <= ({32{reg2_data_in[31]}} << (6'd32-{1'b0, reg1_data_in[4:0]})) | reg2_data_in >> reg1_data_in[4:0];
 				end
 				default:				begin
 					shiftres <= `ZeroWord;
@@ -102,17 +100,17 @@ module ex(
 
 
  always @ (*) begin
-	 wd_o <= wd_i;	 	 	
-	 wreg_o <= wreg_i;
-	 case ( alusel_i ) 
+	 des_addr_out <= des_addr_in;	 	 	
+	 des_exist_out <= des_exist_in;
+	 case ( alusel_in ) 
 	 	`EXE_RES_LOGIC:		begin
-	 		wdata_o <= logicout;
+	 		des_data_out <= logicout;
 	 	end
 	 	`EXE_RES_SHIFT:		begin
-	 		wdata_o <= shiftres;
+	 		des_data_out <= shiftres;
 	 	end	 	
-	 	default:					begin
-	 		wdata_o <= `ZeroWord;
+	 	default:		begin
+	 		des_data_out <= `ZeroWord;
 	 	end
 	 endcase
  end	
