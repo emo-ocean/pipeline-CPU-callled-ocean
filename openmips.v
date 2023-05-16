@@ -162,26 +162,26 @@ module openmips(
 		.rdata2 (reg2_data)
 	);
 
-	//ID/EX模块
+	//id_ex module
 	id_ex id_ex0(
 		.clk(clk),
 		.rst(rst),
 		
-		//从译码阶段ID模块传递的信息
+		//from id
 		.id_aluop(id_aluop_o),
 		.id_alusel(id_alusel_o),
 		.id_reg1(id_reg1_o),
 		.id_reg2(id_reg2_o),
-		.id_wd(id_wd_o),
-		.id_wreg(id_wreg_o),
+		.id_des_addr(id_wd_o),
+		.id_des_exist(id_wreg_o),
 	
-		//传递到执行阶段EX模块的信息
+		//pass to ex
 		.ex_aluop(ex_aluop_i),
 		.ex_alusel(ex_alusel_i),
 		.ex_reg1(ex_reg1_i),
 		.ex_reg2(ex_reg2_i),
-		.ex_wd(ex_wd_i),
-		.ex_wreg(ex_wreg_i)
+		.ex_des_addr(ex_wd_i),
+		.ex_des_exist(ex_wreg_i)
 	);		
 	
 	//EX module
