@@ -1,6 +1,5 @@
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
-//// Copyright (C) 2014 leishangwen@163.com                       ////
 ////                                                              ////
 //// This source file may be used and distributed without         ////
 //// restriction provided that this copyright statement is not    ////
@@ -24,9 +23,8 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  if_id
 // File:    if_id.v
-// Author:  Lei Silei
-// E-mail:  leishangwen@163.com
-// Description: IF/ID½×¶ÎµÄ¼Ä´æÆ÷
+// Author: yuzehai
+// Description: if_id
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -34,11 +32,11 @@
 
 module if_id(
 
-	input	wire										clk,
-	input wire										rst,
+	input	wire			clk,
+	input wire			rst,
 	
 
-	input wire[`InstAddrBus]			if_pc,
+	input wire[`InstAddrBus]	if_pc,
 	input wire[`InstBus]          if_inst,
 	output reg[`InstAddrBus]      id_pc,
 	output reg[`InstBus]          id_inst  
