@@ -1,7 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
 //// Copyright (C) 2014 leishangwen@163.com                       ////
-////                                                              ////
 //// This source file may be used and distributed without         ////
 //// restriction provided that this copyright statement is not    ////
 //// removed from the file and that any derivative work contains  ////
@@ -24,9 +23,8 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  inst_rom
 // File:    inst_rom.v
-// Author:  Lei Silei
-// E-mail:  leishangwen@163.com
-// Description: Ö¸Áî´æ´¢Æ÷
+// Author: yuzehai
+// Description:rom storage
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -34,10 +32,10 @@
 
 module inst_rom(
 
-//	input	wire										clk,
-	input wire										ce,
-	input wire[`InstAddrBus]			addr,
-	output reg[`InstBus]					inst
+//	input	wire				clk,
+	input wire				ce,//chip enable
+	input wire[`InstAddrBus]		addr,
+	output reg[`InstBus]			inst
 	
 );
 
