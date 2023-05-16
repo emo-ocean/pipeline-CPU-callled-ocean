@@ -1,6 +1,5 @@
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
-//// Copyright (C) 2014 leishangwen@163.com                       ////
 ////                                                              ////
 //// This source file may be used and distributed without         ////
 //// restriction provided that this copyright statement is not    ////
@@ -24,9 +23,8 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  mem_wb
 // File:    mem_wb.v
-// Author:  Lei Silei
-// E-mail:  leishangwen@163.com
-// Description: MEM/WB阶段的寄存器
+// Author:  yuzehai
+// Description: mem_wb
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -34,19 +32,19 @@
 
 module mem_wb(
 
-	input	wire										clk,
-	input wire										rst,
+	input	wire			clk,
+	input wire			rst,
 	
 
-	//来自访存阶段的信息	
-	input wire[`RegAddrBus]       mem_wd,
+	//from mem	
+	input wire[`RegAddrBus]       mem_des_addr,
 	input wire                    mem_wreg,
-	input wire[`RegBus]					 mem_wdata,
+	input wire[`RegBus]		mem_wdata,
 
-	//送到回写阶段的信息
+	//pass to wb
 	output reg[`RegAddrBus]      wb_wd,
 	output reg                   wb_wreg,
-	output reg[`RegBus]					 wb_wdata	       
+	output reg[`RegBus]		 wb_wdata	       
 	
 );
 
@@ -55,7 +53,7 @@ module mem_wb(
 		if(rst == `RstEnable) begin
 			wb_wd <= `NOPRegAddr;
 			wb_wreg <= `WriteDisable;
-		  wb_wdata <= `ZeroWord;	
+		 	 wb_wdata <= `ZeroWord;	
 		end else begin
 			wb_wd <= mem_wd;
 			wb_wreg <= mem_wreg;
