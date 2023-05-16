@@ -1,6 +1,5 @@
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
-//// Copyright (C) 2014 leishangwen@163.com                       ////
 ////                                                              ////
 //// This source file may be used and distributed without         ////
 //// restriction provided that this copyright statement is not    ////
@@ -24,9 +23,8 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  pc_reg
 // File:    pc_reg.v
-// Author:  Lei Silei
-// E-mail:  leishangwen@163.com
-// Description: Ö¸ÁîÖ¸Õë¼Ä´æÆ÷PC
+// Author: yuzehai
+// Description: pc
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -34,10 +32,10 @@
 
 module pc_reg(
 
-	input	wire										clk,
-	input wire										rst,
+	input	wire			clk,
+	input wire			rst,
 	
-	output reg[`InstAddrBus]			pc,
+	output reg[`InstAddrBus]	pc,
 	output reg                    ce
 	
 );
