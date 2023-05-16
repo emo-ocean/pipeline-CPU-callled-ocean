@@ -102,7 +102,7 @@ module openmips(
 	
   assign rom_addr_o = pc;
 
-  //IF/ID模块例化
+  //if_id module
 	if_id if_id0(
 		.clk(clk),
 		.rst(rst),
@@ -219,35 +219,35 @@ module openmips(
 		.mem_des_data(mem_wdata_i)					       	
 	);
 	
-  //MEM模块例化
+  //mem module
 	mem mem0(
 		.rst(rst),
 	
 		//来自EX/MEM模块的信息	
-		.wd_i(mem_wd_i),
-		.wreg_i(mem_wreg_i),
-		.wdata_i(mem_wdata_i),
+		.des_addr_in(mem_wd_i),
+		.des_exist_in(mem_wreg_i),
+		.des_data_in(mem_wdata_i),
 	  
 		//送到MEM/WB模块的信息
-		.wd_o(mem_wd_o),
-		.wreg_o(mem_wreg_o),
-		.wdata_o(mem_wdata_o)
+		.des_addr_out(mem_wd_o),
+		.des_exist_out(mem_wreg_o),
+		.des_data_out(mem_wdata_o)
 	);
 
-  //MEM/WB模块
+  //MEM/WB module
 	mem_wb mem_wb0(
 		.clk(clk),
 		.rst(rst),
 
 		//来自访存阶段MEM模块的信息	
-		.mem_wd(mem_wd_o),
-		.mem_wreg(mem_wreg_o),
-		.mem_wdata(mem_wdata_o),
+		.mem_des_addr(mem_wd_o),
+		.mem_des_exist(mem_wreg_o),
+		.mem_des_data(mem_wdata_o),
 	
 		//送到回写阶段的信息
-		.wb_wd(wb_wd_i),
-		.wb_wreg(wb_wreg_i),
-		.wb_wdata(wb_wdata_i)
+		.wb_des_addr(wb_wd_i),
+		.wb_des_exist(wb_wreg_i),
+		.wb_des_data(wb_wdata_i)
 									       	
 	);
 
