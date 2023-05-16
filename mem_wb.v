@@ -38,26 +38,26 @@ module mem_wb(
 
 	//from mem	
 	input wire[`RegAddrBus]       mem_des_addr,
-	input wire                    mem_wreg,
-	input wire[`RegBus]		mem_wdata,
+	input wire                    mem_des_exist,
+	input wire[`RegBus]		mem_des_data,
 
 	//pass to wb
-	output reg[`RegAddrBus]      wb_wd,
-	output reg                   wb_wreg,
-	output reg[`RegBus]		 wb_wdata	       
+	output reg[`RegAddrBus]      wb_des_addr,
+	output reg                   wb_des_exist,
+	output reg[`RegBus]		wb_des_data	       
 	
 );
 
 
 	always @ (posedge clk) begin
 		if(rst == `RstEnable) begin
-			wb_wd <= `NOPRegAddr;
-			wb_wreg <= `WriteDisable;
-		 	 wb_wdata <= `ZeroWord;	
+			wb_des_addr <= `NOPRegAddr;
+			wb_des_exist <= `WriteDisable;
+		 	wb_des_data <= `ZeroWord;	
 		end else begin
-			wb_wd <= mem_wd;
-			wb_wreg <= mem_wreg;
-			wb_wdata <= mem_wdata;
+			wb_des_addr <= mem_des_addr;
+			wb_des_exist <= mem_des_exist;
+			wb_des_data <= mem_des_data;
 		end    //if
 	end      //always
 			
