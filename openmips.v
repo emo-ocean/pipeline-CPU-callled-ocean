@@ -91,7 +91,7 @@ module openmips(
 	wire[`RegAddrBus] reg1_addr;
   	wire[`RegAddrBus] reg2_addr;
   
-  //pc_reg例化
+  //pc_reg module
 	pc_reg pc_reg0(
 		.clk(clk),
 		.rst(rst),
