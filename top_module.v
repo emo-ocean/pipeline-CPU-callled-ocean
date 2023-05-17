@@ -181,7 +181,7 @@ module top_module(
 		.ex_alusel(ex_alusel_in),
 		.ex_reg1(ex_reg1_in),
 		.ex_reg2(ex_reg2_in),
-		.ex_des_addr(ex_des_addr_in)
+		.ex_des_addr(ex_des_addr_in),
 		.ex_des_exist(ex_des_exist_in)
 	);		
 	
