@@ -37,23 +37,23 @@ module openmips(
 	input wire			rst,
 	
  
-	input wire[`RegBus]           rom_data_i,
-	output wire[`RegBus]           rom_addr_o,
-	output wire                    rom_ce_o
+	input wire[`RegBus]           rom_data_in,
+	output wire[`RegBus]           rom_addr_out,
+	output wire                    rom_ce_out
 	
 );
-
+	//if and if_id/
 	wire[`InstAddrBus] pc;
-	wire[`InstAddrBus] id_pc_i;
-	wire[`InstBus] id_inst_i;
+	wire[`InstAddrBus] id_pc_in;
+	wire[`InstBus] id_inst_in;
 	
-	//连接译码阶段ID模块的输出与ID/EX模块的输入
-	wire[`AluOpBus] id_aluop_o;
-	wire[`AluSelBus] id_alusel_o;
-	wire[`RegBus] id_reg1_o;
-	wire[`RegBus] id_reg2_o;
-	wire id_wreg_o;
-	wire[`RegAddrBus] id_wd_o;
+	//连接译码阶段ID模块的输出与ID/EX模块的输入/
+	wire[`AluOpBus] id_aluop_out;
+	wire[`AluSelBus] id_alusel_out;
+	wire[`RegBus] id_reg1_out;
+	wire[`RegBus] id_reg2_out;
+	wire id_des_exist_out;
+	wire[`RegAddrBus] id_des_addr_out;
 	
 	//连接ID/EX模块的输出与执行阶段EX模块的输入
 	wire[`AluOpBus] ex_aluop_i;
@@ -91,32 +91,33 @@ module openmips(
 	wire[`RegAddrBus] reg1_addr;
   	wire[`RegAddrBus] reg2_addr;
   
-  //pc_reg module
+  	//pc_reg module
 	pc_reg pc_reg0(
 		.clk(clk),
 		.rst(rst),
 		.pc(pc),
-		.ce(rom_ce_o)		
+		.ce(rom_ce_out)		
 			
 	);
 	
   assign rom_addr_o = pc;
 
-  //if_id module
+  	//if_id module
 	if_id if_id0(
 		.clk(clk),
 		.rst(rst),
 		.if_pc(pc),
-		.if_inst(rom_data_i),
-		.id_pc(id_pc_i),
-		.id_inst(id_inst_i)      	
+		.if_inst(rom_data_in),
+		.id_pc(id_pc_in),
+		.id_inst(id_inst_in)      	
 	);
 	
 	//id module
 	id id0(
+		//         /
 		.rst(rst),
-		.pc_in(id_pc_i),
-		.inst_in(id_inst_i),
+		.pc_in(id_pc_in),
+		.inst_in(id_inst_in),
 
 		.reg1_data_in(reg1_data),
 		.reg2_data_in(reg2_data),
@@ -138,16 +139,16 @@ module openmips(
 		.reg1_addr_out(reg1_addr),
 		.reg2_addr_out(reg2_addr), 
 	  
-		//pass to id_ex stage
-		.aluop_out(id_aluop_o),
-		.alusel_out(id_alusel_o),
-		.reg1_data_out(id_reg1_o),
-		.reg2_data_out(id_reg2_o),
-		.des_addr_out(id_wd_o),
-		.des_exist_out(id_wreg_o)
+		//pass to id_ex stage/
+		.aluop_out(id_aluop_out),
+		.alusel_out(id_alusel_out),
+		.reg1_data_out(id_reg1_out),
+		.reg2_data_out(id_reg2_out),
+		.des_addr_out(id_des_addr_out),
+		.des_exist_out(id_des_exist_out)
 	);
 
-  //通用寄存器Regfile例化
+  	//renfile module
 	regfile regfile1(
 		.clk (clk),
 		.rst (rst),
@@ -203,8 +204,8 @@ module openmips(
 		
 	);
 
-  //ex_mem module
-  ex_mem ex_mem0(
+  	//ex_mem module
+  	ex_mem ex_mem0(
 		.clk(clk),
 		.rst(rst),
 	  
@@ -219,7 +220,7 @@ module openmips(
 		.mem_des_data(mem_wdata_i)					       	
 	);
 	
-  //mem module
+  	//mem module
 	mem mem0(
 		.rst(rst),
 	
@@ -234,7 +235,7 @@ module openmips(
 		.des_data_out(mem_wdata_o)
 	);
 
-  //MEM/WB module
+  	//MEM/WB module
 	mem_wb mem_wb0(
 		.clk(clk),
 		.rst(rst),
