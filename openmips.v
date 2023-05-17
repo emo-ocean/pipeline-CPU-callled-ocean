@@ -55,33 +55,33 @@ module openmips(
 	wire id_des_exist_out;
 	wire[`RegAddrBus] id_des_addr_out;
 	
-	//连接ID/EX模块的输出与执行阶段EX模块的输入
-	wire[`AluOpBus] ex_aluop_i;
-	wire[`AluSelBus] ex_alusel_i;
-	wire[`RegBus] ex_reg1_i;
-	wire[`RegBus] ex_reg2_i;
-	wire ex_wreg_i;
-	wire[`RegAddrBus] ex_wd_i;
+	//连接ID/EX模块的输出与执行阶段EX模块的输入/
+	wire[`AluOpBus] ex_aluop_in;
+	wire[`AluSelBus] ex_alusel_in;
+	wire[`RegBus] ex_reg1_in;
+	wire[`RegBus] ex_reg2_in;
+	wire ex_des_exist_in;
+	wire[`RegAddrBus] ex_des_addr_in;
 	
-	//连接执行阶段EX模块的输出与EX/MEM模块的输入
-	wire ex_wreg_o;
-	wire[`RegAddrBus] ex_wd_o;
-	wire[`RegBus] ex_wdata_o;
+	//连接执行阶段EX模块的输出与EX/MEM模块的输入/
+	wire ex_des_exist_out;
+	wire[`RegAddrBus] ex_des_addr_out;
+	wire[`RegBus] ex_des_data_out;
 
-	//连接EX/MEM模块的输出与访存阶段MEM模块的输入
-	wire mem_wreg_i;
-	wire[`RegAddrBus] mem_wd_i;
-	wire[`RegBus] mem_wdata_i;
+	//连接EX/MEM模块的输出与访存阶段MEM模块的输入/
+	wire mem_des_exist_in;
+	wire[`RegAddrBus] mem_des_addr_in;
+	wire[`RegBus] mem_des_data_in;
 
-	//连接访存阶段MEM模块的输出与MEM/WB模块的输入
-	wire mem_wreg_o;
-	wire[`RegAddrBus] mem_wd_o;
-	wire[`RegBus] mem_wdata_o;
+	//连接访存阶段MEM模块的输出与MEM/WB模块的输入/
+	wire mem_des_exist_out;
+	wire[`RegAddrBus] mem_des_addr_out;
+	wire[`RegBus] mem_des_data_out;
 	
-	//连接MEM/WB模块的输出与回写阶段的输入	
-	wire wb_wreg_i;
-	wire[`RegAddrBus] wb_wd_i;
-	wire[`RegBus] wb_wdata_i;
+	//连接MEM/WB模块的输出与回写阶段的输入/	
+	wire wb_des_exist_in;
+	wire[`RegAddrBus] wb_des_addr_in;
+	wire[`RegBus] wb_des_data_in;
 	
 	//连接译码阶段ID模块与通用寄存器Regfile模块
   	wire reg1_read;
@@ -91,7 +91,7 @@ module openmips(
 	wire[`RegAddrBus] reg1_addr;
   	wire[`RegAddrBus] reg2_addr;
   
-  	//pc_reg module
+  	//pc_reg module/
 	pc_reg pc_reg0(
 		.clk(clk),
 		.rst(rst),
@@ -102,7 +102,7 @@ module openmips(
 	
   assign rom_addr_o = pc;
 
-  	//if_id module
+  	//if_id module/
 	if_id if_id0(
 		.clk(clk),
 		.rst(rst),
@@ -122,15 +122,15 @@ module openmips(
 		.reg1_data_in(reg1_data),
 		.reg2_data_in(reg2_data),
 
-		//from ex to id(raw)
-		.ex_des_exist_in(ex_wreg_o),
-		.ex_des_data_in(ex_wdata_o),
-		.ex_des_addr_in(ex_wd_o),
+		//from ex to id(raw)/
+		.ex_des_exist_in(ex_des_exist_out),
+		.ex_des_data_in(ex_des_data_out),
+		.ex_des_addr_in(ex_des_addr_out),
 
 		//from mem to id (raw)
-		.mem_des_exist_in(mem_wreg_o),
-		.mem_des_data_in(mem_wdata_o),
-		.mem_des_addr_in(mem_wd_o),
+		.mem_des_exist_in(mem_des_exist_out),
+		.mem_des_data_in(mem_des_data_out),
+		.mem_des_addr_in(mem_des_addr_out),
 
 		//pass to regfile
 		.reg1_read_out(reg1_read),
@@ -152,9 +152,9 @@ module openmips(
 	regfile regfile1(
 		.clk (clk),
 		.rst (rst),
-		.we	(wb_wreg_i),
-		.waddr (wb_wd_i),
-		.wdata (wb_wdata_i),
+		.we	(wb_des_exist_in),
+		.waddr (wb_des_addr_in),
+		.wdata (wb_des_data_in),
 		.re1 (reg1_read),
 		.raddr1 (reg1_addr),
 		.rdata1 (reg1_data),
@@ -169,38 +169,38 @@ module openmips(
 		.rst(rst),
 		
 		//from id
-		.id_aluop(id_aluop_o),
-		.id_alusel(id_alusel_o),
-		.id_reg1(id_reg1_o),
-		.id_reg2(id_reg2_o),
-		.id_des_addr(id_wd_o),
-		.id_des_exist(id_wreg_o),
+		.id_aluop(id_aluop_out),
+		.id_alusel(id_alusel_out),
+		.id_reg1(id_reg1_out),
+		.id_reg2(id_reg2_out),
+		.id_des_addr(id_des_addr_out),
+		.id_des_exist(id_des_exist_out),
 	
 		//pass to ex
-		.ex_aluop(ex_aluop_i),
-		.ex_alusel(ex_alusel_i),
-		.ex_reg1(ex_reg1_i),
-		.ex_reg2(ex_reg2_i),
-		.ex_des_addr(ex_wd_i),
-		.ex_des_exist(ex_wreg_i)
+		.ex_aluop(ex_aluop_in),
+		.ex_alusel(ex_alusel_in),
+		.ex_reg1(ex_reg1_in),
+		.ex_reg2(ex_reg2_in),
+		.ex_des_addr(ex_des_addr_in)
+		.ex_des_exist(ex_des_exist_in)
 	);		
 	
 	//EX module
 	ex ex0(
 		.rst(rst),
 	
-		//from id to ex
-		.aluop_in(ex_aluop_i),
-		.alusel_in(ex_alusel_i),
-		.reg1_data_in(ex_reg1_i),
-		.reg2_data_in(ex_reg2_i),
-		.des_addr_in(ex_wd_i),
-		.des_exist_in(ex_wreg_i),
+		//from id to ex/
+		.aluop_in(ex_aluop_in),
+		.alusel_in(ex_alusel_in),
+		.reg1_data_in(ex_reg1_in),
+		.reg2_data_in(ex_reg2_in),
+		.des_addr_in(ex_des_addr_in),
+		.des_exist_in(ex_des_exist_in),
 	  
-	  	//ex result
-		.des_addr_out(ex_wd_o),
-		.des_exist_out(ex_wreg_o),
-		.des_data_out(ex_wdata_o)
+	  	//ex result/
+		.des_addr_out(ex_des_addr_out),
+		.des_exist_out(ex_des_exist_out),
+		.des_data_out(ex_des_data_out)
 		
 	);
 
@@ -210,14 +210,14 @@ module openmips(
 		.rst(rst),
 	  
 		//from ex
-		.ex_des_addr(ex_wd_o),
-		.ex_des_exist(ex_wreg_o),
-		.ex_des_data(ex_wdata_o),
+		.ex_des_addr(ex_des_addr_out),
+		.ex_des_exist(ex_des_exist_out),
+		.ex_des_data(ex_des_data_out),
 	
 		//pass to mem
-		.mem_des_addr(mem_wd_i),
-		.mem_des_exist(mem_wreg_i),
-		.mem_des_data(mem_wdata_i)					       	
+		.mem_des_addr(mem_des_addr_in),
+		.mem_des_exist(mem_des_exist_in),
+		.mem_des_data(mem_des_data_in)					       	
 	);
 	
   	//mem module
@@ -225,14 +225,14 @@ module openmips(
 		.rst(rst),
 	
 		//来自EX/MEM模块的信息	
-		.des_addr_in(mem_wd_i),
-		.des_exist_in(mem_wreg_i),
-		.des_data_in(mem_wdata_i),
+		.des_addr_in(mem_des_addr_in),
+		.des_exist_in(mem_des_exist_in),
+		.des_data_in(mem_des_data_in),
 	  
 		//送到MEM/WB模块的信息
-		.des_addr_out(mem_wd_o),
-		.des_exist_out(mem_wreg_o),
-		.des_data_out(mem_wdata_o)
+		.des_addr_out(mem_des_addr_out),
+		.des_exist_out(mem_des_exist_out),
+		.des_data_out(mem_des_data_out)
 	);
 
   	//MEM/WB module
@@ -241,14 +241,14 @@ module openmips(
 		.rst(rst),
 
 		//来自访存阶段MEM模块的信息	
-		.mem_des_addr(mem_wd_o),
-		.mem_des_exist(mem_wreg_o),
-		.mem_des_data(mem_wdata_o),
+		.mem_des_addr(mem_des_addr_out),
+		.mem_des_exist(mem_des_exist_out),
+		.mem_des_data(mem_wdes_data_out),
 	
 		//送到回写阶段的信息
-		.wb_des_addr(wb_wd_i),
-		.wb_des_exist(wb_wreg_i),
-		.wb_des_data(wb_wdata_i)
+		.wb_des_addr(wb_des_addr_in),
+		.wb_des_exist(wb_des_exist_in),
+		.wb_des_data(wb_des_data_in)
 									       	
 	);
 
