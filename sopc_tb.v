@@ -1,6 +1,5 @@
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
-//// Copyright (C) 2014 leishangwen@163.com                       ////
 ////                                                              ////
 //// This source file may be used and distributed without         ////
 //// restriction provided that this copyright statement is not    ////
@@ -22,18 +21,17 @@
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-// Module:  openmips_min_sopc_tb
-// File:    openmips_min_sopc_tb.v
-// Author:  Lei Silei
-// E-mail:  leishangwen@163.com
-// Description: openmips_min_sopcµÄtestbench
+// Module:  sopc_tb
+// File:    sopc_tb.v
+// Author:  yzuehai
+// Description: simulation of sopc
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
 `include "defines.v"
 `timescale 1ns/1ps
 
-module openmips_min_sopc_tb();
+module sopc_tb();
 
   reg     CLOCK_50;
   reg     rst;
@@ -50,7 +48,7 @@ module openmips_min_sopc_tb();
     #1000 $stop;
   end
        
-  openmips_min_sopc openmips_min_sopc0(
+ sopc sopc0(
 		.clk(CLOCK_50),
 		.rst(rst)	
 	);
