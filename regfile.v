@@ -1,6 +1,5 @@
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
-//// Copyright (C) 2014 leishangwen@163.com                       ////
 ////                                                              ////
 //// This source file may be used and distributed without         ////
 //// restriction provided that this copyright statement is not    ////
@@ -24,9 +23,8 @@
 //////////////////////////////////////////////////////////////////////
 // Module:  regfile
 // File:    regfile.v
-// Author:  Lei Silei
-// E-mail:  leishangwen@163.com
-// Description: 通用寄存器，共32个
+// Author:  yuzehai
+// Description: 32 registers
 // Revision: 1.0
 //////////////////////////////////////////////////////////////////////
 
@@ -34,22 +32,22 @@
 
 module regfile(
 
-	input	wire										clk,
-	input wire										rst,
+	input	wire			clk,
+	input wire			rst,
 	
-	//写端口
-	input wire										we,
-	input wire[`RegAddrBus]				waddr,
-	input wire[`RegBus]						wdata,
+	//write interface
+	input wire			we,
+	input wire[`RegAddrBus]		waddr,
+	input wire[`RegBus]		wdata,
 	
-	//读端口1
-	input wire										re1,
-	input wire[`RegAddrBus]			  raddr1,
+	//read interface 1
+	input wire			re1,
+	input wire[`RegAddrBus]		raddr1,
 	output reg[`RegBus]           rdata1,
 	
-	//读端口2
-	input wire										re2,
-	input wire[`RegAddrBus]			  raddr2,
+	//read interface2
+	input wire			re2,
+	input wire[`RegAddrBus]		raddr2,
 	output reg[`RegBus]           rdata2
 	
 );
