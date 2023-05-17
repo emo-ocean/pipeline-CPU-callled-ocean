@@ -35,7 +35,7 @@
 
 `include "defines.v"
 
-module openmips_min_sopc(
+module sopc(
 
 	input	wire			clk,
 	input wire			rst
@@ -52,9 +52,9 @@ module openmips_min_sopc(
 		.clk(clk),
 		.rst(rst),
 	
-		.rom_addr_o(inst_addr),
-		.rom_data_i(inst),
-		.rom_ce_o(rom_ce)
+		.rom_addr_out(inst_addr),
+		.rom_data_in(inst),
+		.rom_ce_out(rom_ce)
 	
 	);
 	
