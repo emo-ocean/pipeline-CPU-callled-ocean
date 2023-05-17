@@ -100,7 +100,7 @@ module top_module(
 			
 	);
 	
-  assign rom_addr_o = pc;
+  assign rom_addr_out = pc;
 
   	//if_id module/
 	if_id if_id0(
@@ -243,7 +243,7 @@ module top_module(
 		//来自访存阶段MEM模块的信息	
 		.mem_des_addr(mem_des_addr_out),
 		.mem_des_exist(mem_des_exist_out),
-		.mem_des_data(mem_wdes_data_out),
+		.mem_des_data(mem_des_data_out),
 	
 		//送到回写阶段的信息
 		.wb_des_addr(wb_des_addr_in),
