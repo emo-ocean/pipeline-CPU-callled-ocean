@@ -31,7 +31,7 @@
 
 `include "defines.v"
 
-module openmips(
+module top_module(
 
 	input	wire			clk,
 	input wire			rst,
